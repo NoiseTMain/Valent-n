@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Pro tebe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Valentýn</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,7 +11,7 @@
             height: 100vh;
             margin: 0;
             background-color: #FAEEE6;
-            overflow: hidden;
+            overflow: hidden; 
         }
         #content {
             border: 1px solid transparent;
@@ -20,23 +20,29 @@
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
             padding: 20px;
             text-align: center;
-            max-width: 90%;
-            width: 400px;
+            width: 90%; /* Lepší pro mobily */
+            max-width: 400px;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
             z-index: 10;
         }
+        #buttons-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
         #yesButton, #noButton {
             font-size: 20px;
             border-radius: 12px;
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
-            padding: 15px;
+            padding: 15px 25px;
             border: none;
             cursor: pointer;
             margin: 10px;
+            -webkit-tap-highlight-color: transparent; /* Odstraní modré bliknutí na mobilu */
         }
         #yesButton {
             background-color: #4CAF50; /* Green */
@@ -46,19 +52,21 @@
             background-color: #f44336; /* Red */
             color: white;
         }
-        #yesButton:hover, #noButton:hover {
-            box-shadow: 0 12px 20px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        #noButton:disabled {
+            background-color: #ddd;
+            color: #666;
+            box-shadow: none;
         }
-
-        /* Styl pro fotku */
-        .my-photo {
-            max-width: 100%;
-            max-height: 300px; /* Omezení výšky, aby to nebylo obří */
+        
+        /* Styl pro tvou fotku */
+        .response-image {
+            width: 100%;
+            height: auto;
             border-radius: 10px;
             margin-top: 15px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             animation: fadeIn 1s ease;
-            object-fit: cover;
+            display: block;
         }
 
         @keyframes fadeIn {
@@ -69,12 +77,12 @@
         .heart {
             position: fixed;
             top: -100px;
-            width: 50px;
+            width: 50px; /* Menší srdíčka pro mobil */
             height: 50px;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 29.6"><path fill="%23FF0000" d="M16 29.6c-1-.6-21-12.6-16-20C5.7 5.6 10.3 4 16 11c5.7-7 10.3-5.4 16-2.6 5 7.4-15 19.6-16 20z"/></svg>');
             animation: fall 4s linear infinite;
             z-index: 5;
-            background-repeat: no-repeat;
+            pointer-events: none; /* Aby šlo klikat skrz srdíčka */
         }
 
         @keyframes fall {
@@ -99,25 +107,27 @@
         document.getElementById('noButton').addEventListener('click', function() { 
             noClickCount++;
             if (noClickCount == 1) {
-                document.getElementById('yesButton').style.fontSize = '30px';
+                document.getElementById('yesButton').style.fontSize = '25px';
             } else if (noClickCount == 2) {
-                this.style.fontSize = '10px';
-                document.getElementById('yesButton').style.fontSize = '40px';
+                this.style.fontSize = '15px';
+                document.getElementById('yesButton').style.fontSize = '30px';
             } else if (noClickCount == 3) {
-                document.getElementById('yesButton').style.fontSize = '90px';
-                this.style.fontSize = '7px';
-            } else if (noClickCount == 4) {
+                document.getElementById('yesButton').style.fontSize = '40px';
+                this.style.fontSize = '10px';
+            } else if (noClickCount >= 4 && noClickCount < 10) {
                 this.style.position = 'absolute';
-                this.style.left = Math.random() * window.innerWidth + 'px';
-                this.style.top = Math.random() * window.innerHeight + 'px';
-            } else if (noClickCount >= 5 && noClickCount < 10) {
-                this.style.position = 'absolute';
-                this.style.left = Math.random() * window.innerWidth + 'px';
-                this.style.top = Math.random() * window.innerHeight + 'px';
+                // Omezení pohybu tlačítka, aby neuteklo z obrazovky mobilu
+                var maxX = window.innerWidth - this.offsetWidth;
+                var maxY = window.innerHeight - this.offsetHeight;
+                this.style.left = Math.random() * maxX + 'px';
+                this.style.top = Math.random() * maxY + 'px';
             } else if (noClickCount >= 10 && noClickCount < 15) {
                 this.style.position = 'absolute';
-                this.style.left = Math.random() * window.innerWidth + 'px';
-                this.style.top = Math.random() * window.innerHeight + 'px';
+                var maxX = window.innerWidth - this.offsetWidth;
+                var maxY = window.innerHeight - this.offsetHeight;
+                this.style.left = Math.random() * maxX + 'px';
+                this.style.top = Math.random() * maxY + 'px';
+                
                 document.getElementById('message').innerText = 'Opravdu ?🧐';
                 document.getElementById('message').style.position = 'fixed';
                 document.getElementById('message').style.bottom = '20px';
@@ -150,11 +160,10 @@
             document.getElementById('noButton').style.display = 'none';
             document.getElementById('message').style.display = 'none';
 
-            // 4. Vložení fotky (hledá soubor laska.png vedle html souboru)
+            // 4. Vložení tvé fotky z Postimg
             var img = document.createElement('img');
-            img.src = 'laska.png'; 
-            img.className = 'my-photo';
-            img.alt = 'Fotka se nenačetla. Ujisti se, že soubor laska.png je ve stejné složce!';
+            img.src = 'https://i.postimg.cc/KYZy1RYr/IMG-0724.jpg'; // Tady je tvůj funkční odkaz
+            img.className = 'response-image';
             
             document.getElementById('content').appendChild(img);
         });
