@@ -1,6 +1,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>Pro tebe</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -10,7 +11,7 @@
             height: 100vh;
             margin: 0;
             background-color: #FAEEE6;
-            overflow: hidden; /* Aby nám nerušily scrollování padající srdíčka */
+            overflow: hidden;
         }
         #content {
             border: 1px solid transparent;
@@ -45,22 +46,19 @@
             background-color: #f44336; /* Red */
             color: white;
         }
-        #noButton:disabled {
-            background-color: #ddd;
-            color: #666;
-            box-shadow: none;
-        }
         #yesButton:hover, #noButton:hover {
             box-shadow: 0 12px 20px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
         }
 
-        /* Tady je styl pro tu tvoji fotku, aby vypadala hezky */
+        /* Styl pro fotku */
         .my-photo {
             max-width: 100%;
+            max-height: 300px; /* Omezení výšky, aby to nebylo obří */
             border-radius: 10px;
             margin-top: 15px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             animation: fadeIn 1s ease;
+            object-fit: cover;
         }
 
         @keyframes fadeIn {
@@ -71,11 +69,12 @@
         .heart {
             position: fixed;
             top: -100px;
-            width: 100px;
-            height: 100px;
+            width: 50px;
+            height: 50px;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 29.6"><path fill="%23FF0000" d="M16 29.6c-1-.6-21-12.6-16-20C5.7 5.6 10.3 4 16 11c5.7-7 10.3-5.4 16-2.6 5 7.4-15 19.6-16 20z"/></svg>');
             animation: fall 4s linear infinite;
             z-index: 5;
+            background-repeat: no-repeat;
         }
 
         @keyframes fall {
@@ -97,7 +96,7 @@
 
     <script>
         var noClickCount = 0;
-        document.getElementById('noButton').addEventListener('click', function() { //NOOOOO button
+        document.getElementById('noButton').addEventListener('click', function() { 
             noClickCount++;
             if (noClickCount == 1) {
                 document.getElementById('yesButton').style.fontSize = '30px';
@@ -120,7 +119,6 @@
                 this.style.left = Math.random() * window.innerWidth + 'px';
                 this.style.top = Math.random() * window.innerHeight + 'px';
                 document.getElementById('message').innerText = 'Opravdu ?🧐';
-                // Uprava pozice zpravy aby byla videt
                 document.getElementById('message').style.position = 'fixed';
                 document.getElementById('message').style.bottom = '20px';
                 document.getElementById('message').style.width = '100%';
@@ -133,7 +131,7 @@
             }
         });
 
-        document.getElementById('yesButton').addEventListener('click', function() { //YESSSS button
+        document.getElementById('yesButton').addEventListener('click', function() { 
             // 1. Změna textu
             document.getElementById('question').innerText = 'YIEEEEE SAN DATE NATIN? OTW';
             
@@ -152,12 +150,12 @@
             document.getElementById('noButton').style.display = 'none';
             document.getElementById('message').style.display = 'none';
 
-            // 4. Vložení tvé fotky
+            // 4. Vložení fotky (hledá soubor laska.png vedle html souboru)
             var img = document.createElement('img');
-            img.src = 'https://ctrlv.cz/shots/2026/01/31/xYFW.png'; // Tady je tvůj odkaz
+            img.src = 'laska.png'; 
             img.className = 'my-photo';
+            img.alt = 'Fotka se nenačetla. Ujisti se, že soubor laska.png je ve stejné složce!';
             
-            // Přidáme fotku pod nápis
             document.getElementById('content').appendChild(img);
         });
     </script>
