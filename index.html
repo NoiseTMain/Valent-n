@@ -64,9 +64,9 @@
 </head>
 <body>
     <div id="content">
-        <h2 id="question">Would you date me?</h2>
-        <button id="yesButton">YES</button>
-        <button id="noButton">NO</button>
+        <h2 id="question">Budeš moje Valentýnka ?</h2>
+        <button id="yesButton">Ano</button>
+        <button id="noButton">Ne</button>
         <p id="message"></p>
     </div>
 
@@ -96,15 +96,15 @@
                 this.style.position = 'absolute';
                 this.style.left = Math.random() * window.innerWidth + 'px';
                 this.style.top = Math.random() * window.innerHeight + 'px';
-                document.getElementById('message').innerText = 'Are you sure?';
+                document.getElementById('message').innerText = 'Opravdu ?🧐';
                 document.getElementById('message').style.position = 'absolute';
                 document.getElementById('message').style.left = this.style.left;
                 document.getElementById('message').style.top = parseFloat(this.style.top) + 50 + 'px';
             } else if (noClickCount == 15) {
-                document.getElementById('message').innerText = 'Oh No! You broke the button :c';
+                document.getElementById('message').innerText = 'Tlačítko se nějak rozbilo 🫣';
                 this.disabled = true;
                 this.style.color = grey;
-                document.getElementById('message').innerText = 'Oh No! You broke the button :c';
+                document.getElementById('message').innerText = 'Tlačítko se nějak rozbilo 🫣';
             }
         });
 
