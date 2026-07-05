@@ -101,8 +101,9 @@ function renderHero() {
   document.querySelector("[data-hero-headline]").textContent = tField(h, "headline");
   document.querySelector("[data-hero-subheadline]").textContent = tField(h, "subheadline");
   const photoWrap = document.querySelector("[data-hero-photo]");
-  // Pokud právě běží 3D logo, jeho plátno nepřepisujeme — model je statický
-  // (logo.glb), takže ho není potřeba překreslovat při každé změně dat.
+  // Pokud právě běží 3D logo, jeho plátno nepřepisujeme — monogram je
+  // statický (postavený jednou při načtení), takže ho není potřeba
+  // překreslovat při každé změně dat.
   if (photoWrap && !photoWrap.querySelector(".logo3d-canvas")) {
     photoWrap.innerHTML = h.photo
       ? `<img src="${h.photo}" alt="${esc(h.name)}">`
